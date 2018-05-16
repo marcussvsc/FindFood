@@ -1,0 +1,50 @@
+<%= form_with(model: dish, local: true) do |form| %>
+  <% if dish.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(dish.errors.count, "error") %> prohibited this dish from being saved:</h2>
+
+      <ul>
+      <% dish.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name, id: :dish_name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :cost %>
+    <%= form.text_field :cost, id: :dish_cost %>
+  </div>
+
+  <div class="field">
+    <%= form.label :restaurant_id %>
+    <%= form.select :restaurant_id, Restaurant.all.collect {|restaurant| [restaurant.name, restaurant.id]} %>
+  </div>
+  <div class="field">
+    <%= form.label :category_id %>
+    <%= form.select :category_id, Category.all.collect {|category| [category.description, category.id]} %>
+  </div>
+
+  <div class="field">
+    <%= form.label "Ingredients" %>
+    <% @ingredients.each do |ingredient| %>
+      <%= check_box_tag "dish[ingredient_ids][]", ingredient.id, @dish.ingredient_ids.include?(ingredient.id) %>
+      <%= ingredient.description %>
+    <% end %>
+  </div>
+
+  <div class="field">
+    <%= form.label :time_to_prepare %>
+    <%= form.time_select :time_to_prepare, id: :dish_time_to_prepare %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

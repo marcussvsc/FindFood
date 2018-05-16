@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  cost: 1.5
+  time_to_prepare: 2018-05-10 04:00:39
+
+two:
+  name: MyString
+  cost: 1.5
+  time_to_prepare: 2018-05-10 04:00:39
