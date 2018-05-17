@@ -4,12 +4,23 @@ class RestaurantsController < ApplicationController
   # GET /restaurants
   # GET /restaurants.json
   def index
-    @restaurants = Restaurant.all
+    @restaurants = Restaurant.all.order("name")
+
+  end
+  def homepage
+    @restaurants = Restaurant.all.order("name")
+    @categories = Category.all.order("description")
+
+    # retorna todos os restaurantes com determinada categoria
+    @restaurants = Restaurant.joins(:dishes).where(dishes: {category_id: params[:category_id]}).order("name") unless params[:category_id].blank?
+    #retorna todos os restaurante com pratos com determinado nome
+    @restaurants = Restaurant.joins(:dishes).where("UPPER(dishes.name) like ?" , "%#{params[:search_term].to_s.upcase}%").uniq unless params[:search_term].blank?
   end
 
   # GET /restaurants/1
   # GET /restaurants/1.json
   def show
+
   end
 
   # GET /restaurants/new
